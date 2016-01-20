@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   validity.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalide <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 18:43:32 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/19 20:36:03 by dgalide          ###   ########.fr       */
+/*   Updated: 2016/01/20 02:36:38 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fillit.h>
+#include "fillit.h"
 #include <stdio.h>
 
-int				check_buff(char *buff, int ret)
+int				check_1(char *buff, int ret)
 {
 	int			j;
 	int			k;
@@ -50,11 +50,11 @@ int				ft_neighbor(char **piece)
 	l = 0;
 	i = -1;
 	j = -1;
-	while (i++ < 4)
+	while (++i < 4)
 	{
-		while (j++ < 4)
+		while (++j < 4)
 		{
-			if (ft_ischar(piece[i][j]) == 0)
+			if (ischar(piece[i][j]) == 0)
 				return (0);
 			if (piece[i][j + 1] && piece[i][j + 1] == '#')
 				l++;	
@@ -67,10 +67,10 @@ int				ft_neighbor(char **piece)
 		}
 		j = 0;
 	}
-	((j == 6 || j == 8)?return (1) : return (0));
+	return((j == 6 || j == 8)? 1: 0);
 }
 
-int			main(int argc, char **argv)
+/*int			main(int argc, char **argv)
 {
 	char **tab;
 	char buff[22];
@@ -82,3 +82,4 @@ int			main(int argc, char **argv)
 	printf("%d\n", check_validity(tab));
 	return (0);
 }
+*/

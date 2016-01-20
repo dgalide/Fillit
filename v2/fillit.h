@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/17 15:18:21 by mchevall          #+#    #+#             */
-/*   Updated: 2016/01/20 19:47:12 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 20:02:45 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ typedef struct	s_map
 	char	**solution;
 }				t_map;
 
+int				**malloc_list(int nb_tetri);
 char 			**buff_to_tab(char *str);
 int				ischar(char character);
-int				ft_read(int const fd, t_map *map);
 int				ft_neighbor(char **piece);
-void			relativ_pos(char **piece, t_map *map, int nb);
-void			check(char *str, int ret);
-void			xychr(char **piece, int *x, int *y, int c);
-void			ft_error(void);
-int				**malloc_list(int nb_tetri);
 int				check_1(char *buff, int ret);
+void			check(char *str, int ret);
+void			relativ_pos(char **piece, t_map *map, int nb); 
+void			ft_error(void);
+void			xychr(char **piece, int *x, int *y, int c);
+int				ft_read(int fd, t_map *map);
+int				update_pos(t_map map);
 int				check_space(t_map map);
 void			put_tetri(t_map map);
-int				update_pos(t_map map);
 void			erase_tetri(t_map map, int i);
 
 #endif

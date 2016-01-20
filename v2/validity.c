@@ -6,12 +6,18 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 18:43:32 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 19:49:41 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 20:02:52 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
+
+void			ft_error(void)
+{
+	ft_putendl("error");
+	exit(EXIT_FAILURE);
+}
 
 int		ischar(char character)
 {

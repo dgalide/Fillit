@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 13:57:02 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 14:44:02 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 17:07:24 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,26 +91,43 @@ int				*relativ_pos(char **piece)
 
 	i = 0;
 	j = 0;
-	l = 1;
+	l = 0;
 	k = xchr(piece, '#');
 	m = ychr(piece, '#');
+	printf("ref(x)= %d && y = %d\n", k, m);
 	pos = (int *)malloc(sizeof(int) * 9);
+	pos[0] = 0;
+	pos[1] = 0;
 	while (i < 4)
 	{
 		while (j < 4)
 		{
-			if (piece[i][j] == '#' && l != 1)
+			if (piece[i][j] == '#' && l < 2)
+				l++;
+			if (piece[i][j] == '#' && l > 1)
 			{
 				pos[l] = i - k;
 				pos[l + 1] = j - m;
+				l += 2;
 			}
-			l++;
 			j++;
 		}
 		i++;
 		j = 0;
 	}
 	return (pos);
+}
+
+void			print_lst(int *lst, int len)
+{
+	int			i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_putnbr(lst[i]);
+		i++;
+	}
 }
 
 int				ft_read(int const fd, t_map *map)
@@ -144,17 +161,20 @@ int				ft_read(int const fd, t_map *map)
 		ft_error();
 	}
 	i = ((ret + 1) / 21);
-	while (++k < i)
+	while (k < i)
 	{
 		tab = buff_to_tab(ft_strsub(buff, j, 20));
-		//map->tetrilist = (int **)malloc(sizeof(int *) * i);
+		map->tetrilist = (int **)malloc(sizeof(int *) * i);
 		if (ft_neighbor(tab) == 0)
 		{
 			ft_putchar('D');
 			ft_error();
 		}
-	    // map->tetrilist[k] = relativ_pos(tab);
+	    map->tetrilist[k] = relativ_pos(tab);
+	    map->tetrilist[k][8] = 0;
+	    print_lst(map->tetrilist[k], 9);
 		j += 21;
+		k++;
 	}
 	return (i);
 }

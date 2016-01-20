@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 13:57:02 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 04:44:06 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 13:51:46 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	 ychr(char **tab, int c)
 	return (ft_error);
 }
 
-int				**relativ_pos(char **piece, int **tetrilist, int nb, int total)
+int				**relativ_pos(char **piece, int **tetrilist, int nb)
 {
 	int i;
 	int	j;
@@ -91,6 +91,7 @@ int				**relativ_pos(char **piece, int **tetrilist, int nb, int total)
 	l = 1;
 	m = xchr(piece, '#');
 	k = ychr(piece, '#');
+	tetrilist[nb] = (int *)malloc(sizeof(int) * 9);
 	while (i < 4)
 	{
 		while (j < 4)
@@ -109,7 +110,7 @@ int				**relativ_pos(char **piece, int **tetrilist, int nb, int total)
 	return (1);
 }
 
-int				ft_read(int const fd)
+int				ft_read(int const fd, t_map *map)
 {
 	char 		buff[SIZE_BUFF];
 	int			ret;
@@ -119,6 +120,7 @@ int				ft_read(int const fd)
 	int			k;
 
 	j = 0;
+	k = 0;
 	ret = read(fd, buff, SIZE_BUFF);
 	if (buff[ret + 1] < SIZE_BUFF)
 		buff[ret + 1] = '\0';
@@ -141,6 +143,7 @@ int				ft_read(int const fd)
 	while (++k < i)
 	{
 		tab = buff_to_tab(ft_strsub(buff, j, 20));
+		map->tetrilist = (int **)malloc(sizeof(int *) * i);
 		if (ft_neighbor(tab) == 0)
 		{
 			ft_putchar('D');
@@ -157,12 +160,13 @@ int				main(int argc, char **argv)
 	int fd;
 	int	i;
 	int	**tetrilist;
+	t_map *map;
 
+	map = (t_map *)malloc(sizeof(t_map));
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
-		i = ft_read(fd);
-		tetrilist = (int **)malloc(sizeof(int *) * i);
+		i = ft_read(fd, map);
 		
 	}
 	return (0);

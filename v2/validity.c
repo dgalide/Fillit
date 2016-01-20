@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 18:43:32 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 15:43:09 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 16:16:08 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int				check_1(char *buff, int ret)
 
 int				check_index(int i, int j)
 {
-	if (i < 0 || j < 0)
+	if (i < 0 || i > 3)
 		return 0;
-	if (i > 3 || j > 3)
+	if (j < 0 || j > 3)
 		return 0;
-	return (1);
+	return 1;
 }
 
 int				ft_neighbor(char **piece)
@@ -65,25 +65,38 @@ int				ft_neighbor(char **piece)
 		while (j < 4)
 		{
 			if (ischar(piece[i][j]) == 0)
+				ft_error();
+			if (piece[i][j] == '#')
 			{
-				ft_putchar('Z');
-				return (0);
+				ft_putchar('#');
+				if ((j + 1) < 4 && piece[i][j + 1] == '#')
+				{
+					ft_putchar('1');
+					l++;
+				}
+				if ((j - 1) > -1 && piece[i][j - 1] == '#')
+				{
+					ft_putchar('2');
+					l++;
+				}
+				if ((i + 1) < 4 && piece[i + 1][j] == '#')
+				{
+					ft_putchar('3');
+					l++;
+				}
+				if ((i - 1) > -1 && piece[i - 1][j] == '#')
+				{
+					ft_putchar('4');
+					l++;
+				}
 			}
-			if (check_index(i , (j + 1)) == 1 && piece[i][j + 1] == '#')
-				l++;
-			if (check_index(i, (j - 1)) == 1 && piece[i][j - 1] == '#')
-				l++;
-			if (check_index((i + 1), j) == 1 && piece[i + 1][j] == '#')
-				l++;
-			if (check_index((i - 1), j) == 1 && piece[i - 1][j] == '#')
-				l++;
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	printf("%d\n", i);
-	return((j == 6 || j == 8)? 1: 0);
+	printf("%d\n", l);
+	return((l == 6 || l == 8)? 1: 0);
 }
 
 /*int			main(int argc, char **argv)

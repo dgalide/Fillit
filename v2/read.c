@@ -6,18 +6,12 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 13:57:02 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 20:02:50 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 20:18:04 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
-
-void			ft_error(void)
-{
-	ft_putendl("error");
-	exit(EXIT_FAILURE);
-}
 
 char			**buff_to_tab(char *str)
 {
@@ -35,8 +29,6 @@ char			**buff_to_tab(char *str)
 		i += 1;
 	}
 	tab[i] = NULL;
-	if (ft_neighbor(tab) == 0)
-		ft_error();
 	return (tab);
 }
 
@@ -141,6 +133,9 @@ int				ft_read(int const fd, t_map *map)
 	while (k < i)
 	{
 		tmp = buff_to_tab(ft_strsub(buff, j, 20));
+		if (ft_neighbor(tmp) == 0)
+			ft_error();
+		ft_printtab(tmp);
 	    relativ_pos(tmp, map, k);
 		j += 21;
 		k++;

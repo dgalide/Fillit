@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 18:43:32 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 20:02:52 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 20:23:22 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ int				ft_neighbor(char **piece)
 	int			i;
 	int			j;
 	int			l;
+	int			k;
 
 	l = 0;
 	i = 0;
 	j = 0;
+	k = 0;
 	while (i < 4)
 	{
 		while (j < 4)
@@ -87,13 +89,14 @@ int				ft_neighbor(char **piece)
 					l++;
 				if ((i - 1) > -1 && piece[i - 1][j] == '#')
 					l++;
+				k++;
 			}
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	return((l == 6 || l == 8)? 1: 0);
+	return(((l == 6 || l == 8) && k == 4)? 1: 0);
 }
 
 /*int			main(int argc, char **argv)

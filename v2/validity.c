@@ -6,12 +6,19 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 18:43:32 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 16:16:08 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 19:49:41 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
+
+int		ischar(char character)
+{
+	if (character == '.' || character == '#' || character == '\n')
+		return (1);
+	return (0);
+}
 
 int				check_1(char *buff, int ret)
 {
@@ -20,7 +27,7 @@ int				check_1(char *buff, int ret)
 	int			l;
 	int			i;
 
-	i = ((ret + 1) / 21); // nb tetri;
+	i = ((ret + 1) / 21);
 	j = 4;
 	k = 0;
 	while (k < i)
@@ -41,13 +48,12 @@ int				check_1(char *buff, int ret)
 	return (1);
 }
 
-int				check_index(int i, int j)
-{
-	if (i < 0 || i > 3)
-		return 0;
-	if (j < 0 || j > 3)
-		return 0;
-	return 1;
+void			check(char *str, int ret)
+{	
+	if (((ret + 1) % 21) != 0)
+		ft_error();
+	if (check_1(str, ret) == 0)
+		ft_error();
 }
 
 int				ft_neighbor(char **piece)
@@ -59,43 +65,28 @@ int				ft_neighbor(char **piece)
 	l = 0;
 	i = 0;
 	j = 0;
-	ft_putchar('X');
 	while (i < 4)
 	{
 		while (j < 4)
 		{
 			if (ischar(piece[i][j]) == 0)
-				ft_error();
+				return 0;
 			if (piece[i][j] == '#')
 			{
-				ft_putchar('#');
 				if ((j + 1) < 4 && piece[i][j + 1] == '#')
-				{
-					ft_putchar('1');
 					l++;
-				}
 				if ((j - 1) > -1 && piece[i][j - 1] == '#')
-				{
-					ft_putchar('2');
 					l++;
-				}
 				if ((i + 1) < 4 && piece[i + 1][j] == '#')
-				{
-					ft_putchar('3');
 					l++;
-				}
 				if ((i - 1) > -1 && piece[i - 1][j] == '#')
-				{
-					ft_putchar('4');
 					l++;
-				}
 			}
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	printf("%d\n", l);
 	return((l == 6 || l == 8)? 1: 0);
 }
 

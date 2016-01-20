@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 13:57:02 by dgalide           #+#    #+#             */
-/*   Updated: 2016/01/20 17:07:24 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/20 19:47:08 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ char			**buff_to_tab(char *str)
 		i += 1;
 	}
 	tab[i] = NULL;
-	ft_printtab(tab);
+	if (ft_neighbor(tab) == 0)
+		ft_error();
 	return (tab);
 }
 
-int	xchr(char **tab, int c)
+void	xychr(char **tab, int *x, int *y, int c)
 {
 	int i;
 	int	j;
@@ -51,54 +52,32 @@ int	xchr(char **tab, int c)
 		while (j < 4)
 		{
 			if (tab[i][j] == (char)c)
-				return (i);
+			{
+				*x = i;
+				*y = j;
+				i = 4;
+				j = 4;
+			}
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	return (0);
-}
-int	 ychr(char **tab, int c)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < 4)
-	{
-		while (j < 4)
-		{
-			if (tab[i][j] == (char)c)
-				return (j);
-			j++;
-		}
-		i++;
-		j = 0;
-	}
-	return (0);
 }
 
-int				*relativ_pos(char **piece)
+void				relativ_pos(char **piece, t_map *map, int nb)
 {
 	int i;
 	int	j;
 	int	k;
 	int	l;
 	int	m;
-	int	*pos;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	l = 0;
-	k = xchr(piece, '#');
-	m = ychr(piece, '#');
-	printf("ref(x)= %d && y = %d\n", k, m);
-	pos = (int *)malloc(sizeof(int) * 9);
-	pos[0] = 0;
-	pos[1] = 0;
-	while (i < 4)
+	xychr(piece, &m, &k, '#');
+	while (++i < 4)
 	{
 		while (j < 4)
 		{
@@ -106,16 +85,14 @@ int				*relativ_pos(char **piece)
 				l++;
 			if (piece[i][j] == '#' && l > 1)
 			{
-				pos[l] = i - k;
-				pos[l + 1] = j - m;
+				map->tetrilist[nb][l] = i - k;
+				map->tetrilist[nb][l + 1] = j - m;
 				l += 2;
 			}
 			j++;
 		}
-		i++;
 		j = 0;
 	}
-	return (pos);
 }
 
 void			print_lst(int *lst, int len)
@@ -130,49 +107,41 @@ void			print_lst(int *lst, int len)
 	}
 }
 
+int				**malloc_list(int nb_tetri)
+{
+	int			**tetrilist;
+	int			i;
+
+	i = 0;
+	tetrilist = (int **)malloc(sizeof(int *) * nb_tetri);
+	while (i < nb_tetri)
+	{
+		tetrilist[i] = (int *)malloc(sizeof(int) * 9);
+		ft_bzero(tetrilist[i], 9);
+		i++;
+	}
+	return (tetrilist);
+}
+
 int				ft_read(int const fd, t_map *map)
 {
 	char 		buff[SIZE_BUFF];
+	char		**tmp;
 	int			ret;
-	char		**tab;
 	int			i;
 	int			j;
 	int			k;
 
 	j = 0;
 	k = 0;
-	i = 0;
 	ret = read(fd, buff, SIZE_BUFF);
-	if (buff[ret + 1] < SIZE_BUFF)
-		buff[ret + 1] = '\0';
-	else
-	{
-		ft_putchar('A');
-		ft_error();
-	}
-	if (((ret + 1) % 21) != 0)
-	{
-		ft_putchar('B');
-		ft_error();
-	}
-	if (check_1(buff, ret) == 0)
-	{
-		ft_putchar('C');
-		ft_error();
-	}
+	check(buff, ret);
 	i = ((ret + 1) / 21);
+	map->tetrilist = malloc_list(i);
 	while (k < i)
 	{
-		tab = buff_to_tab(ft_strsub(buff, j, 20));
-		map->tetrilist = (int **)malloc(sizeof(int *) * i);
-		if (ft_neighbor(tab) == 0)
-		{
-			ft_putchar('D');
-			ft_error();
-		}
-	    map->tetrilist[k] = relativ_pos(tab);
-	    map->tetrilist[k][8] = 0;
-	    print_lst(map->tetrilist[k], 9);
+		tmp = buff_to_tab(ft_strsub(buff, j, 20));
+	    relativ_pos(tmp, map, k);
 		j += 21;
 		k++;
 	}
@@ -183,7 +152,6 @@ int				main(int argc, char **argv)
 {
 	int fd;
 	int	i;
-	int	**tetrilist;
 	t_map *map;
 
 	map = (t_map *)malloc(sizeof(t_map));

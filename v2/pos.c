@@ -87,9 +87,11 @@ int		erase_tetri(t_map *map, int i)
 	int		y;
 	int		a;
 	int		b;
+	static int	z;
 
 	if (i > -1 && i < map->nb_tetri)
-	{
+	}
+		z++;
 		xychr(map->map, &x, &y, (i + 65));
 		ft_putchar('M');
 		a = map->tetrilist[i][0];
@@ -106,6 +108,8 @@ int		erase_tetri(t_map *map, int i)
 		map->map[x + a][y + b] = '.';
 		map->tetrilist[i][8] = 0;
 		map->placed_tetri--;
+		map->c_pos[0] = x;
+		map->c_pos[1] = y;
 		return (1);
 	}
 	return 0;

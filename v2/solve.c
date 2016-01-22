@@ -33,6 +33,7 @@ int		find(t_map *map, int i)
 		{
 			ft_putchar('B');
 			put_tetri(map, i);
+			update_pos(map);
 			return (find(map, i + 1));
 		}
 		else
@@ -50,7 +51,7 @@ int		find(t_map *map, int i)
 				}
 			}
 			erase_tetri(map, (i - 1));
-			ft_error();
+			update_pos(map);
 			return(find(map, i));
 		}
 

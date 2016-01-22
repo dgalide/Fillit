@@ -179,9 +179,10 @@ int				main(int argc, char **argv)
 		ft_read(fd, map);
 		load_map(map);
 		print_lst(map);
-		ft_printtab(map->map);
 		if (check_space(map, map->tetrilist[0]) == 0)
 			ft_error();
+		put_tetri(map, 0);
+		ft_printtab(map->map);
 	}
 	return (0);
 }

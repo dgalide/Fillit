@@ -21,26 +21,42 @@ int			solve(t_map *map)
 
 int		find(t_map *map, int i)
 {
-	if (i == map->nb_tetri)
+	if (map->placed_tetri == map->nb_tetri)
 	{
-//		ft_putchar('G');
 		solution_cpy(map);
 		return (1);
 	}
 	if (map->tetrilist[i][8] == 0)
 	{
-//		ft_putchar('D');
-		put_tetri(map, i);
-//		ft_putchar('E');
-		update_pos(map);
-//		ft_putchar('F');
-		find(map, i + 1);
+		ft_putchar('A');
+		if (check_space(map, map->tetrilist[i]) == 1)
+		{
+			ft_putchar('B');
+			put_tetri(map, i);
+			return (find(map, i + 1));
+		}
+		else
+		{
+			ft_putchar('C');
+			while (update_pos(map) != 0)
+			{
+				ft_putchar('D');
+				map->c_pos[1]++;
+				if (check_space(map, map->tetrilist[i]) == 1)
+				{
+					ft_putchar('E');
+					put_tetri(map, i);
+					return (find(map, (i + 1)));
+				}
+			}
+			erase_tetri(map, (i - 1));
+			ft_error();
+			return(find(map, i));
+		}
+
 	}
 	else
-	{
-//		ft_putchar('H');
-		find(map, i + 1);
-	}
+		return(find(map, i + 1));
 	return (0);
 }
 

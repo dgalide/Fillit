@@ -29,6 +29,7 @@ typedef struct	s_map
 	int		*c_pos;
 	int		nb_tetri;
 	int		**tetrilist;
+	int		placed_tetri;
 	char	**map;
 	char	**solution;
 }				t_map;
@@ -42,14 +43,15 @@ int				check_1(char *buff, int ret);
 void			check(char *str, int ret);
 void			relativ_pos(char **piece, t_map *map, int nb); 
 void			ft_error(void);
-void			xychr(char **piece, int *x, int *y, int c);
+int			xychr(char **piece, int *x, int *y, char c);
 void			ft_read(int fd, t_map *map);
 void			solution_cpy(t_map *map);
 int				update_pos(t_map *map);
 int				solve(t_map *map);
 int				find(t_map *map, int i);
 int				check_space(t_map *map, int *lst);
+void			print_solution(t_map *map);
 void			put_tetri(t_map *map, int i);
-void			erase_tetri(t_map *map, int i);
+int			erase_tetri(t_map *map, int i);
 
 #endif

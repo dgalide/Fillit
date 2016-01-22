@@ -32,7 +32,7 @@ char			**buff_to_tab(char *str)
 	return (tab);
 }
 
-void	xychr(char **tab, int *x, int *y, int c)
+int	xychr(char **tab, int *x, int *y, char c)
 {
 	int i;
 	int	j;
@@ -43,17 +43,18 @@ void	xychr(char **tab, int *x, int *y, int c)
 	{
 		while (j < 4)
 		{
-			if (tab[i][j] == (char)c)
+			if (tab[i][j] == c)
 			{
 				*x = i;
 				*y = j;
-				return ;
+				return 1;
 			}
 			j++;
 		}
 		i++;
 		j = 0;
 	}
+	return 0;
 }
 
 void				relativ_pos(char **piece, t_map *map, int nb)
@@ -133,6 +134,7 @@ void			load_map(t_map *map)
 	ft_bzero(map->c_pos, 2);
 	map->map = ft_maketab(13, 13);
 	map->solution = NULL;
+	map->placed_tetri = 0;
 	while (i < 13)
 	{
 		ft_memset(map->map[i], '.', 13);
@@ -179,8 +181,6 @@ int				main(int argc, char **argv)
 		ft_read(fd, map);
 		load_map(map);
 		print_lst(map);
-		if (check_space(map, map->tetrilist[0]) == 0)
-			ft_error();
 		map->c_range = 5;
 		solve(map);
 		ft_putchar('\n');

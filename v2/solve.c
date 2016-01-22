@@ -11,38 +11,64 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "stdio.h"
 
-int		solve(t_map *map, int i)
+int			solve(t_map *map)
+{
+}
+
+int		find(t_map *map, int i)
 {
 	if (i == map->nb_tetri)
 	{
-		//solution_cpy(map);
+//		ft_putchar('G');
+		solution_cpy(map);
 		return (1);
 	}
 	if (map->tetrilist[i][8] == 0)
 	{
 		while (!check_space(map, map->tetrilist[i]))
 		{
-			ft_putchar('A');
+			//ft_putchar('A');
 			if(update_pos(map) == 0)
 			{
-				ft_putchar('B');
+			//	ft_putchar('B');
 				erase_tetri(map, i - 1);
-				ft_putchar('C');
-				solve(map, i);
+			//	ft_putchar('C');
+				find(map, i);
 			}
 		}
-		ft_putchar('D');
+//		ft_putchar('D');
 		put_tetri(map, i);
-		ft_putchar('E');
+//		ft_putchar('E');
 		update_pos(map);
-		ft_putchar('F');
-		ft_putchar('\n');
-		ft_printtab(map->map);
-		ft_putchar('\n');
-		solve(map, i + 1);
+//		ft_putchar('F');
+		find(map, i + 1);
 	}
 	else
-		solve(map, i + 1);
-	return (1);
+	{
+//		ft_putchar('H');
+		find(map, i + 1);
+	}
+	return (0);
+}
+
+void		print_solution(t_map *map)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (i < map->c_range)
+	{
+		while (j < map->c_range)
+		{
+			ft_putchar(map->solution[i][j]);
+			j++;
+		}
+		ft_putchar('\n');
+		j = 0;
+		i++;
+	}
 }

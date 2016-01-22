@@ -46,6 +46,8 @@ void			xychr(char **piece, int *x, int *y, int c);
 void			ft_read(int fd, t_map *map);
 void			solution_cpy(t_map *map);
 int				update_pos(t_map *map);
+int				solve(t_map *map);
+int				find(t_map *map, int i);
 int				check_space(t_map *map, int *lst);
 void			put_tetri(t_map *map, int i);
 void			erase_tetri(t_map *map, int i);

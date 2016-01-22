@@ -181,8 +181,10 @@ int				main(int argc, char **argv)
 		print_lst(map);
 		if (check_space(map, map->tetrilist[0]) == 0)
 			ft_error();
-		put_tetri(map, 0);
-		solve(map, 0);
+		solve(map);
+		ft_putchar('\n');
+		print_solution(map);
+		printf("%d\n", map->c_range);
 	}
 	return (0);
 }

@@ -12,34 +12,34 @@
 
 #include "fillit.h"
 
-int		solve(t_map map, int i)
+int		solve(t_map *map, int i)
 {
-	if (i > map.nb_tetri)
-		return (1);
-	if (map.tetrilist[i][8] == 0)
+	if (i == map->nb_tetri)
 	{
-		/*if (check_space(map))
-		  {
-		  put_tetri(map);
-		  map.tetrilist[i][8] = 1;
-		  map.c_pos = update_pos(map);
-		  }
-		  else if (map.c_pos > map.c_range * map.c_range)
-		  {*/
-		while (!check_space(map))
+		//solution_cpy(map);
+		return (1);
+	}
+	if (map->tetrilist[i][8] == 0)
+	{
+		while (!check_space(map, map->tetrilist[i]))
 		{
-			map.c_pos++;
-			if(map.c_pos > map.c_range * map.c_range)
+			ft_putchar('A');
+			if(update_pos(map) == 0)
 			{
+				ft_putchar('B');
 				erase_tetri(map, i - 1);
-				map.tetrilist[i - 1][8] = 0;
+				ft_putchar('C');
 				solve(map, i);
 			}
 		}
-		put_tetri(map);
-		map.tetrilist[i][8] = 1;
-		map.c_pos = update_pos(map);
-		//}
+		ft_putchar('D');
+		put_tetri(map, i);
+		ft_putchar('E');
+		update_pos(map);
+		ft_putchar('F');
+		ft_putchar('\n');
+		ft_printtab(map->map);
+		ft_putchar('\n');
 		solve(map, i + 1);
 	}
 	else

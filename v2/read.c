@@ -182,7 +182,7 @@ int				main(int argc, char **argv)
 		if (check_space(map, map->tetrilist[0]) == 0)
 			ft_error();
 		put_tetri(map, 0);
-		ft_printtab(map->map);
+		solve(map, 0);
 	}
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-char	**solution_cpy(t_map *map)
+void	solution_cpy(t_map *map)
 {
 	char	**solution;
 	int		i;
@@ -34,5 +34,5 @@ char	**solution_cpy(t_map *map)
 		solution[i] = ft_strdup(map->map[i]);
 		i++;
 	}
-	return(solution);
+	map->solution = solution;
 }

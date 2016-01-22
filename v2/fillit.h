@@ -44,9 +44,9 @@ void			relativ_pos(char **piece, t_map *map, int nb);
 void			ft_error(void);
 void			xychr(char **piece, int *x, int *y, int c);
 void			ft_read(int fd, t_map *map);
-void			update_pos(t_map map);
-int				check_space(t_map map, int i);
-void			put_tetri(t_map map);
-void			erase_tetri(t_map map, int i);
+void			update_pos(t_map *map);
+int				check_space(t_map *map, int *lst);
+void			put_tetri(t_map *map);
+void			erase_tetri(t_map *map, int i);
 
 #endif

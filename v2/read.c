@@ -124,12 +124,20 @@ int				**malloc_list(int nb_tetri)
 
 void			load_map(t_map *map)
 {
+	int			i;
+
+	i = 0;
 	map->c_range = 13;
 	map->m_range = range_min(map->nb_tetri);
 	map->c_pos = (int *)malloc(sizeof(int) * 2);
 	ft_bzero(map->c_pos, 2);
 	map->map = ft_maketab(13, 13);
 	map->solution = NULL;
+	while (i < 13)
+	{
+		ft_memset(map->map[i], '.', 13);
+		i++;
+	}
 }
 
 void			ft_read(int const fd, t_map *map)
@@ -171,6 +179,9 @@ int				main(int argc, char **argv)
 		ft_read(fd, map);
 		load_map(map);
 		print_lst(map);
+		ft_printtab(map->map);
+		if (check_space(map, map->tetrilist[0]) == 0)
+			ft_error();
 	}
 	return (0);
 }

@@ -181,6 +181,7 @@ int				main(int argc, char **argv)
 		print_lst(map);
 		if (check_space(map, map->tetrilist[0]) == 0)
 			ft_error();
+		map->c_range = 5;
 		solve(map);
 		ft_putchar('\n');
 		print_solution(map);

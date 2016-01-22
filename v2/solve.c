@@ -15,6 +15,8 @@
 
 int			solve(t_map *map)
 {
+	find(map, 0);
+	return (0);
 }
 
 int		find(t_map *map, int i)
@@ -27,17 +29,6 @@ int		find(t_map *map, int i)
 	}
 	if (map->tetrilist[i][8] == 0)
 	{
-		while (!check_space(map, map->tetrilist[i]))
-		{
-			//ft_putchar('A');
-			if(update_pos(map) == 0)
-			{
-			//	ft_putchar('B');
-				erase_tetri(map, i - 1);
-			//	ft_putchar('C');
-				find(map, i);
-			}
-		}
 //		ft_putchar('D');
 		put_tetri(map, i);
 //		ft_putchar('E');

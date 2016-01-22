@@ -17,13 +17,14 @@ int			update_pos(t_map *map)
 			{
 				map->c_pos[0] = x;
 				map->c_pos[1] = y;
-				return ;
+				return 1;
 			}
 			y++;
 		}
 		x++;
 		y = 0;
 	}
+	return (0);
 }
 
 int			check_space(t_map *map, int *lst)
@@ -35,6 +36,10 @@ int			check_space(t_map *map, int *lst)
 
 	x = map->c_pos[0];
 	y = map->c_pos[1];
+	a = lst[0];
+	b = lst[1];
+	if ((((x + a) < map->c_range) && ((y + b) < map->c_range)) && map->map[(x + a)][(y + b)] != '.')
+		return 0;
 	a = lst[2];
 	b = lst[3];
 //	printf("%d ||| %d\n", (x + a), (y + b));
@@ -86,19 +91,18 @@ void		erase_tetri(t_map *map, int i)
 	int		a;
 	int		b;
 
-	x = map->c_pos[0];
-	y = map->c_pos[1];
+	xychr(map->map, &x, &y, (i + 65));
 	a = map->tetrilist[i][0];
 	b = map->tetrilist[i][1];
-	map->map[x + a][y + b] = '.';
+	map->map[x + a][y + b] = (char)(i + 65);
 	a = map->tetrilist[i][2];
 	b = map->tetrilist[i][3];
-	map->map[x + a][y + b] = '.';
+	map->map[x + a][y + b] = (char)(i + 65);
 	a = map->tetrilist[i][4];
 	b = map->tetrilist[i][5];
-	map->map[x + a][y + b] = '.';
+	map->map[x + a][y + b] = (char)(i + 65);
 	a = map->tetrilist[i][6];
 	b = map->tetrilist[i][7];
-	map->map[x + a][y + b] = '.';
+	map->map[x + a][y + b] = (char)(i + 65);
 	map->tetrilist[i][8] = 0;
 }

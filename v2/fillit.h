@@ -26,7 +26,7 @@ typedef struct	s_map
 {
 	int		c_range;
 	int		m_range;
-	int		c_pos;
+	int		*c_pos;
 	int		nb_tetri;
 	int		**tetrilist;
 	char	**map;
@@ -35,6 +35,7 @@ typedef struct	s_map
 
 int				**malloc_list(int nb_tetri);
 char 			**buff_to_tab(char *str);
+int				range_min(int nb);
 int				ischar(char character);
 int				ft_neighbor(char **piece);
 int				check_1(char *buff, int ret);
@@ -42,9 +43,9 @@ void			check(char *str, int ret);
 void			relativ_pos(char **piece, t_map *map, int nb); 
 void			ft_error(void);
 void			xychr(char **piece, int *x, int *y, int c);
-int				ft_read(int fd, t_map *map);
-int				update_pos(t_map map);
-int				check_space(t_map map);
+void			ft_read(int fd, t_map *map);
+void			update_pos(t_map map);
+int				check_space(t_map map, int i);
 void			put_tetri(t_map map);
 void			erase_tetri(t_map map, int i);
 

@@ -47,8 +47,7 @@ void	xychr(char **tab, int *x, int *y, int c)
 			{
 				*x = i;
 				*y = j;
-				i = 4;
-				j = 4;
+				return ;
 			}
 			j++;
 		}
@@ -65,37 +64,45 @@ void				relativ_pos(char **piece, t_map *map, int nb)
 	int	l;
 	int	m;
 
-	i = -1;
-	j = 0;
 	l = 0;
 	xychr(piece, &m, &k, '#');
-	while (++i < 4)
+	i = m;
+	j = k;
+	while (i < 4)
 	{
 		while (j < 4)
 		{
-			if (piece[i][j] == '#' && l < 2)
-				l++;
-			if (piece[i][j] == '#' && l > 1)
+			if (piece[i][j] == '#')
 			{
-				map->tetrilist[nb][l] = i - k;
-				map->tetrilist[nb][l + 1] = j - m;
+				map->tetrilist[nb][l] = i - m;
+				map->tetrilist[nb][l + 1] = j - k;
 				l += 2;
 			}
 			j++;
 		}
 		j = 0;
+		i++;
 	}
 }
 
-void			print_lst(int *lst, int len)
+void			print_lst(t_map *map)
 {
 	int			i;
+	int			j;
 
 	i = 0;
-	while (i < len)
+	j = 0;
+	while (i < map->nb_tetri)
 	{
-		ft_putnbr(lst[i]);
+		while (j < 9)
+		{
+			ft_putnbr(map->tetrilist[i][j]);
+			ft_putchar(',');
+			j++;
+		}
+		ft_putchar('\n');
 		i++;
+		j = 0;
 	}
 }
 
@@ -115,7 +122,17 @@ int				**malloc_list(int nb_tetri)
 	return (tetrilist);
 }
 
-int				ft_read(int const fd, t_map *map)
+void			load_map(t_map *map)
+{
+	map->c_range = 13;
+	map->m_range = range_min(map->nb_tetri);
+	map->c_pos = (int *)malloc(sizeof(int) * 2);
+	ft_bzero(map->c_pos, 2);
+	map->map = ft_maketab(13, 13);
+	map->solution = NULL;
+}
+
+void			ft_read(int const fd, t_map *map)
 {
 	char 		buff[SIZE_BUFF];
 	char		**tmp;
@@ -135,26 +152,25 @@ int				ft_read(int const fd, t_map *map)
 		tmp = buff_to_tab(ft_strsub(buff, j, 20));
 		if (ft_neighbor(tmp) == 0)
 			ft_error();
-		ft_printtab(tmp);
 	    relativ_pos(tmp, map, k);
 		j += 21;
 		k++;
 	}
-	return (i);
+	map->nb_tetri = i;
 }
 
 int				main(int argc, char **argv)
 {
 	int fd;
-	int	i;
 	t_map *map;
 
 	map = (t_map *)malloc(sizeof(t_map));
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
-		i = ft_read(fd, map);
-		
+		ft_read(fd, map);
+		load_map(map);
+		print_lst(map);
 	}
 	return (0);
 }

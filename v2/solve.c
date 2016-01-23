@@ -24,17 +24,21 @@ int		find(t_map *map, int i)
 	ft_printtab(map->map);
 	ft_putchar('\n');
 	int	j;
+	int	rvalue;
 	
 	j = 0;
 	printf("i :%d\n", i);
 	/*if ()
 	{
+		rvalue = -3;
 		return (0);
 	}*/
 	if (map->placed_tetri == map->nb_tetri)
 	{
 		printf("\npassage final\n");
 		solution_cpy(map);
+		printf("\nprinttab:\n");
+		ft_printtab(map->map);
 		return (1);
 	}
 	printf("%d\n", map->tetrilist[i][8]);
@@ -77,7 +81,7 @@ int		find(t_map *map, int i)
 	}
 	else
 		return(find(map, i + 1));
-	return (0);
+	return (rvalue);
 }
 
 void		print_solution(t_map *map)

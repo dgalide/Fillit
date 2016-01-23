@@ -185,7 +185,7 @@ int				main(int argc, char **argv)
 		load_map(map);
 		print_lst(map);
 		map->solution = NULL;
-		while (map->c_range != map->m_range && solve_result != 3)
+		while (map->c_range + 1 != map->m_range && solve_result != 3)
 		{
 			i = 0;
 			printf("c_range : %d\n", map->c_range);

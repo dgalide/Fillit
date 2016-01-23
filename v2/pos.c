@@ -87,16 +87,9 @@ int		erase_tetri(t_map *map, int i)
 	int		y;
 	int		a;
 	int		b;
-	static	int	z;
 
 	if (i > -1 && i < map->nb_tetri)
 	{
-		z++;
-		if (z == 5)
-		{
-			ft_putchar('T');
-			ft_error();
-		}
 		xychr(map->map, &x, &y, (i + 65));
 		a = map->tetrilist[i][0];
 		b = map->tetrilist[i][1];

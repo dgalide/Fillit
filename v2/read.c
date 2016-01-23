@@ -181,7 +181,7 @@ int				main(int argc, char **argv)
 		ft_read(fd, map);
 		load_map(map);
 		print_lst(map);
-		map->c_range = 5;
+		map->c_range = 6;
 		solve(map);
 		ft_putchar('\n');
 		print_solution(map);

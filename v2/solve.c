@@ -16,12 +16,19 @@
 int			find(t_map *map, int i, int rvalue)
 {
 	int	j;
-	static int nb_passage;
+	/*static int nb_passage;
 
 	nb_passage++;
 	printf("\n nb passage: %d\n",nb_passage);
 
 	printf("\n map crange: %d\n",map->c_range);
+		ft_printtab(map->map);
+		ft_putchar('\n');*/
+		if(map->c_range == 4)
+		{
+	//	printf("gogogogogogog\n");
+		print_solution(map);
+		}
 	j = 0;
 	if (map->placed_tetri == map->nb_tetri)
 	{
@@ -52,19 +59,16 @@ int			find(t_map *map, int i, int rvalue)
 					put_tetri(map, i);
 					return (find(map, (i + 1), rvalue));
 				}
-				if (!map->c_pos[1])
+				if (!map->c_pos[1] && map->c_range == map->m_range)
 				{
 					rvalue = -3;
 					return (rvalue);
 				}
 				map->c_pos[1]++;
 			}
-			if (rvalue != -3)
-			{
-				erase_tetri(map, (i - 1));
-				update_pos(map);
-				return(find(map, i, rvalue));
-			}
+			erase_tetri(map, (i - 1));
+			update_pos(map);
+			return(find(map, i, rvalue));
 		}
 	}
 	else

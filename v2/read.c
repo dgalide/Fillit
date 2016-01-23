@@ -128,16 +128,14 @@ void			load_map(t_map *map)
 	int			i;
 
 	i = 0;
-	map->c_range = 13;
 	map->m_range = range_min(map->nb_tetri);
 	map->c_pos = (int *)malloc(sizeof(int) * 2);
 	ft_bzero(map->c_pos, 2);
-	map->map = ft_maketab(13, 13);
-	map->solution = NULL;
+	map->map = ft_maketab(map->c_range, map->c_range);
 	map->placed_tetri = 0;
-	while (i < 13)
+	while (i < map->c_range)
 	{
-		ft_memset(map->map[i], '.', 13);
+		ft_memset(map->map[i], '.', map->c_range);
 		i++;
 	}
 }
@@ -171,20 +169,38 @@ void			ft_read(int const fd, t_map *map)
 
 int				main(int argc, char **argv)
 {
-	int fd;
-	t_map *map;
+	int		fd;
+	int		solve_result;
+	int		i;
+	t_map	*map;
 
 	map = (t_map *)malloc(sizeof(t_map));
+	solve_result = -1;
+	i = 0;
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		ft_read(fd, map);
+		map->c_range = 13;
 		load_map(map);
 		print_lst(map);
-		map->c_range = 6;
-		solve(map);
-		ft_putchar('\n');
+		map->solution = NULL;
+		while (map->c_range != map->m_range && solve_result != 3)
+		{
+			i = 0;
+			printf("c_range : %d\n", map->c_range);
+			solve_result = solve(map);
+			map->c_range--;
+			while (i < map->nb_tetri)
+			{
+				map->tetrilist[i][8] = 0;
+				i++;
+			}
+			printf("%d\n", map->tetrilist[0][8]);
+			load_map(map);
+		}
 		print_solution(map);
+		ft_putchar('\n');
 		printf("%d\n", map->c_range);
 	}
 	return (0);

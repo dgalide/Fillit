@@ -16,7 +16,7 @@ int			update_pos(t_map *map)
 			{
 				map->c_pos[0] = x;
 				map->c_pos[1] = y;
-				return 1;
+				return (1);
 			}
 			y++;
 		}
@@ -87,6 +87,11 @@ int		erase_tetri(t_map *map, int i)
 	int		y;
 	int		a;
 	int		b;
+	/*static int z;
+
+	z++;
+	if (z == 10)
+	ft_error();*/
 
 	if (i > -1 && i < map->nb_tetri)
 	{

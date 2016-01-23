@@ -21,13 +21,18 @@ int			solve(t_map *map)
 
 int		find(t_map *map, int i)
 {
+	ft_printtab(map->map);
+	ft_putchar('\n');
 	int	j;
 	
 	j = 0;
 	printf("i :%d\n", i);
+	/*if ()
+	{
+		return (0);
+	}*/
 	if (map->placed_tetri == map->nb_tetri)
 	{
-		ft_printtab(map->map);
 		printf("\npassage final\n");
 		solution_cpy(map);
 		return (1);
@@ -42,8 +47,6 @@ int		find(t_map *map, int i)
 			ft_putchar('\n');
 			put_tetri(map, i);
 			update_pos(map);
-			ft_printtab(map->map);
-			ft_putchar('\n');
 			while (map->tetrilist[j][8] == 1 && j < map->nb_tetri - 1)
 			{
 				printf("%d\n", j);
@@ -57,13 +60,14 @@ int		find(t_map *map, int i)
 			while (update_pos(map) != 0)
 			{
 				ft_putchar('D');
-				map->c_pos[1]++;
 				if (check_space(map, map->tetrilist[i]) == 1)
 				{
 					ft_putstr("E\n");
 					put_tetri(map, i);
+					ft_putchar('\n');
 					return (find(map, (i + 1)));
 				}
+					map->c_pos[1]++;
 			}
 			ft_putchar ('\n');
 			erase_tetri(map, (i - 1));
@@ -72,10 +76,7 @@ int		find(t_map *map, int i)
 		}
 	}
 	else
-	{
-	printf("1\n");
 		return(find(map, i + 1));
-		}
 	return (0);
 }
 

@@ -185,10 +185,9 @@ int				main(int argc, char **argv)
 		load_map(map);
 		print_lst(map);
 		map->solution = NULL;
-		while (map->c_range + 1 != map->m_range && solve_result != 3)
+		while (map->c_range + 1 != map->m_range && solve_result != -3)
 		{
 			i = 0;
-			printf("c_range : %d\n", map->c_range);
 			solve_result = solve(map);
 			map->c_range--;
 			while (i < map->nb_tetri)
@@ -196,12 +195,12 @@ int				main(int argc, char **argv)
 				map->tetrilist[i][8] = 0;
 				i++;
 			}
-			printf("%d\n", map->tetrilist[0][8]);
 			load_map(map);
 		}
+		printf("Solution print:\n\n");
 		print_solution(map);
 		ft_putchar('\n');
-		printf("%d\n", map->c_range);
+		printf("Taille_map;%d\n", map->s_range);
 	}
 	return (0);
 }

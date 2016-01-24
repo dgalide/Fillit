@@ -90,12 +90,16 @@ int		erase_tetri(t_map *map, int i)
 	static int z;
 
 	z++;
-	if (z == 10)
+	if (z == 5)
 		ft_error();
 
+	x = 0;
+	y = 0;
+	printf("\nerase tetri i = %d\n", i);
 	if (i > -1 && i < map->nb_tetri)
 	{
-		xychr(map->map, &x, &y, (i + 65));
+		map_xy_chr(map, &x, &y, (i + 65));
+		printf("\nx = %d && y = %d\n", x, y);
 		a = map->tetrilist[i][0];
 		b = map->tetrilist[i][1];
 		map->map[x + a][y + b] = '.';

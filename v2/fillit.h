@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/17 15:18:21 by mchevall          #+#    #+#             */
-/*   Updated: 2016/01/20 20:02:45 by julio            ###   ########.fr       */
+/*   Updated: 2016/01/24 18:43:20 by dgalide          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			check(char *str, int ret);
 void			relativ_pos(char **piece, t_map *map, int nb); 
 void			ft_error(void);
 int				xychr(char **piece, int *x, int *y, char c);
+int				map_xy_chr(t_map *map, int *x, int *y, char c);
 void			ft_read(int fd, t_map *map);
 void			solution_cpy(t_map *map);
 int				update_pos(t_map *map);

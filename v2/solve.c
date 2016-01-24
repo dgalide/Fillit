@@ -6,7 +6,7 @@
 /*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 18:04:24 by mchevall          #+#    #+#             */
-/*   Updated: 2016/01/18 20:33:42 by dgalide          ###   ########.fr       */
+/*   Updated: 2016/01/24 15:39:20 by dgalide          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,25 @@
 int			find(t_map *map, int i, int rvalue)
 {
 	int	j;
-	/*static int nb_passage;
+	static int nb_passage;
 
 	nb_passage++;
 	printf("\n nb passage: %d\n",nb_passage);
 
 	printf("\n map crange: %d\n",map->c_range);
-		ft_printtab(map->map);
-		ft_putchar('\n');*/
-		if(map->c_range == 4)
-		{
-	//	printf("gogogogogogog\n");
+	ft_printtab(map->map);
+	ft_putchar('\n');
+	if(map->c_range == 4)
+	{
+		//	printf("gogogogogogog\n");
 		print_solution(map);
-		}
+	}
 	j = 0;
 	if (map->placed_tetri == map->nb_tetri)
 	{
-		if (rvalue !=-3)
-		{
-			solution_cpy(map);
-			map->s_range = map->c_range;
-		}
+		solution_cpy(map);
+		map->s_range = map->c_range;
+
 		ft_printtab(map->map);
 		return (rvalue);
 	}
@@ -59,12 +57,6 @@ int			find(t_map *map, int i, int rvalue)
 					put_tetri(map, i);
 					return (find(map, (i + 1), rvalue));
 				}
-				if (!map->c_pos[1] && map->c_range == map->m_range)
-				{
-					rvalue = -3;
-					return (rvalue);
-				}
-				map->c_pos[1]++;
 			}
 			erase_tetri(map, (i - 1));
 			update_pos(map);
